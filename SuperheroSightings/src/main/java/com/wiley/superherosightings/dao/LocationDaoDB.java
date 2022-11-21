@@ -92,7 +92,7 @@ public class LocationDaoDB implements LocationDao {
         final String DELETE_LOCATION = "DELETE FROM location WHERE location_id = ?";
         jdbc.update(DELETE_LOCATION, id);
         
-        final String DELETE_SIGHTING = "DELETE FROM teacher WHERE location_id = ?";
+        final String DELETE_SIGHTING = "DELETE FROM sighting WHERE location_id = ?";
         jdbc.update(DELETE_SIGHTING, id);
         return true;
     }
