@@ -42,6 +42,7 @@ public class OrganizationDaoDB implements OrganizationDao {
         
         int newId = jdbc.queryForObject("SELECT LAST_INSERT_ID()", Integer.class);
         organization.setOrganizationId(newId);
+        insertOrganizationSuperperson(organization);
         return organization;
     }
 
@@ -72,6 +73,7 @@ public class OrganizationDaoDB implements OrganizationDao {
     }
 
     @Override
+    @Transactional
     public boolean update(Organization organization) {
         final String UPDATE_LOCATION = "UPDATE organization SET name = ?, description = ?, " +
                 "address = ?, phone = ?, email = ? WHERE organization_id = ?";
@@ -82,6 +84,7 @@ public class OrganizationDaoDB implements OrganizationDao {
                 organization.getPhone(),
                 organization.getEmail(),
                 organization.getOrganizationId());
+        insertOrganizationSuperperson(organization);
         return true;
     }
 
@@ -95,7 +98,14 @@ public class OrganizationDaoDB implements OrganizationDao {
         jdbc.update(DELETE_ORGANIZATION_SUPERPERSON, id);
         return true;
     }
-    
+    //helper functions
+    private void insertOrganizationSuperperson(Organization org){
+        final String INSERT_ORG_SUP = "INSERT INTO organization_superperson"
+                + "(organization_id,superperson_id) VALUES(?,?)";
+        for(Superperson sp:org.getSuperpersons()){
+            jdbc.update(INSERT_ORG_SUP,org.getOrganizationId(),sp.getSuperpersonId());
+        }
+    }
     public static final class OrganizationMapper implements RowMapper<Organization> {
 
         @Override
