@@ -5,6 +5,8 @@
  */
 package com.wiley.superherosightings.dto;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -12,12 +14,14 @@ import java.util.Objects;
  * @author tiara
  */
 public class Organization {
+
     int organizationId;
     String name;
     String description;
     String address;
     String phone;
     String email;
+    List<Superperson> superpersons = new ArrayList<>();
 
     public int getOrganizationId() {
         return organizationId;
@@ -67,6 +71,14 @@ public class Organization {
         this.email = email;
     }
 
+    public List<Superperson> getSuperpersons() {
+        return superpersons;
+    }
+
+    public void setSuperpersons(List<Superperson> superpersons) {
+        this.superpersons = superpersons;
+    }
+
     @Override
     public int hashCode() {
         int hash = 3;
@@ -76,6 +88,7 @@ public class Organization {
         hash = 71 * hash + Objects.hashCode(this.address);
         hash = 71 * hash + Objects.hashCode(this.phone);
         hash = 71 * hash + Objects.hashCode(this.email);
+        hash = 71 * hash + Objects.hashCode(this.superpersons);
         return hash;
     }
 
@@ -107,6 +120,9 @@ public class Organization {
             return false;
         }
         if (!Objects.equals(this.email, other.email)) {
+            return false;
+        }
+        if (!this.superpersons.equals(other.superpersons)) {
             return false;
         }
         return true;

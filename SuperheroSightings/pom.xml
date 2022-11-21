@@ -5,14 +5,7 @@
     <artifactId>SuperheroSightings</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
-    </properties>
-  
     <dependencies>
-
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
@@ -37,9 +30,13 @@
             <scope>test</scope>
             <type>jar</type>
         </dependency>
-  
-        
     </dependencies>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
+        <exec.mainClass>com.wiley.superherosightings.SuperheroSightings</exec.mainClass>
+    </properties>
     
     
     <build>
