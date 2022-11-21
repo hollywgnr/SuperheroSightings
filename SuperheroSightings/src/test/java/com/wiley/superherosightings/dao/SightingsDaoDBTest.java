@@ -5,7 +5,7 @@
  */
 package com.wiley.superherosightings.dao;
 
-import com.sg.jdbctcomplexexample.TestApplicationConfiguration;
+import com.wiley.superherosightings.TestApplicationConfiguration;
 import com.wiley.superherosightings.dto.Location;
 import com.wiley.superherosightings.dto.Organization;
 import com.wiley.superherosightings.dto.Sighting;

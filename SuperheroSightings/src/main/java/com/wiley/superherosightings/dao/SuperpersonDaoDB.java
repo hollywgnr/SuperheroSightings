@@ -76,15 +76,15 @@ public class SuperpersonDaoDB implements SuperpersonDao {
     @Transactional
     public void deleteById(int id) {
         //delete from organization_superperson
-        final String DELETE_FROM_ORGANIZATION = "DELETE FROM organization_superperson"
+        final String DELETE_FROM_ORGANIZATION = "DELETE FROM organization_superperson "
                 + "WHERE superperson_id = ?";
         jdbc.update(DELETE_FROM_ORGANIZATION,id);  
         //delete from sighting
-        final String DELETE_FROM_SIGHTING = "DELETE FROM sighitng"
+        final String DELETE_FROM_SIGHTING = "DELETE FROM sighting "
                 + "WHERE superperson_id = ?";
         jdbc.update(DELETE_FROM_SIGHTING,id);
         //finally delete superperson 
-        final String DELETE_BY_ID = "DELETE FROM superhero WHERE id = ?";
+        final String DELETE_BY_ID = "DELETE FROM superperson WHERE superperson_id = ?";
         jdbc.update(DELETE_BY_ID, id);
     }
 
