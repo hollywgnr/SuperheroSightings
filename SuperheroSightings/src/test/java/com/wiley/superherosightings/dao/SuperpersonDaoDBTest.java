@@ -145,7 +145,7 @@ public class SuperpersonDaoDBTest {
             s1.setSuperpersonId(sp.getSuperpersonId());
             s1 = sDao.add(s1);
         Sighting s2 = new Sighting();
-            s2.setLocationId(l1.getLocationId());
+            s2.setLocationId(l2.getLocationId());
             s2.setSightingTime(LocalDateTime.now());
             s2.setSuperpersonId(sp.getSuperpersonId());
             s2 = sDao.add(s2);
