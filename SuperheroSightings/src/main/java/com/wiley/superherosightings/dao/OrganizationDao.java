@@ -17,6 +17,7 @@ public interface OrganizationDao {
     
     Organization add(Organization organization);
     List<Organization> getAll();
+    void addMember(Superperson superperson, Organization organization);
     List<Superperson> getAllMembers(int organizationId);
     Organization findById(int id);
     // true if item exists and is updated

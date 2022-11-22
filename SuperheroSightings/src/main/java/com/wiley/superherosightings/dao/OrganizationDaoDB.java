@@ -54,12 +54,21 @@ public class OrganizationDaoDB implements OrganizationDao {
 
     @Override
     public List<Superperson> getAllMembers(int organizationId) {
-        final String GET_ALL_SUPERHEROS = "SELECT su.superperson_id,su.`name`,su.`description`,su.superpower,su.is_hero"
+        final String GET_ALL_SUPERHEROS = "SELECT DISTINCT su.superperson_id,su.`name`,su.`description`,su.superpower,su.is_hero"
                 + " FROM organization o"
                 + " JOIN organization_superperson os ON o.organization_id = os.organization_id"
                 + " JOIN superperson su ON su.superperson_id = su.superperson_id"
                 + " WHERE o.organization_id = ?;";
         return jdbc.query(GET_ALL_SUPERHEROS, new SuperpersonMapper(), organizationId);
+    }
+    
+    @Override
+    @Transactional
+    public void addMember(Superperson superperson, Organization organization) {
+        // add in memory
+        organization.addSuperperson(superperson);
+        // add to database
+        insertOrganizationSuperperson(organization, superperson);
     }
 
     @Override
@@ -106,6 +115,13 @@ public class OrganizationDaoDB implements OrganizationDao {
             jdbc.update(INSERT_ORG_SUP,org.getOrganizationId(),sp.getSuperpersonId());
         }
     }
+    private void insertOrganizationSuperperson(Organization org, Superperson sp){
+        final String INSERT_ORG_SUP = "INSERT INTO organization_superperson"
+                + "(organization_id,superperson_id) VALUES(?,?)";
+        jdbc.update(INSERT_ORG_SUP,org.getOrganizationId(),sp.getSuperpersonId());
+    }
+
+
     public static final class OrganizationMapper implements RowMapper<Organization> {
 
         @Override

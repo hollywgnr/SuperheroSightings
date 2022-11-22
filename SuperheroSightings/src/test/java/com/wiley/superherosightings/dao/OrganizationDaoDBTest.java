@@ -49,14 +49,15 @@ public class OrganizationDaoDBTest {
     
     @BeforeEach
     public void setUp() {
-        List<Organization> organizations = organizationDao.getAll();
-        for(Organization organization : organizations) {
-            organizationDao.deleteById(organization.getOrganizationId());
-        }
         
         List<Superperson> superpeople = superpersonDao.getAll();
         for(Superperson superperson : superpeople) {
             superpersonDao.deleteById(superperson.getSuperpersonId());
+        }
+        
+        List<Organization> organizations = organizationDao.getAll();
+        for(Organization organization : organizations) {
+            organizationDao.deleteById(organization.getOrganizationId());
         }
         
     }
@@ -144,7 +145,7 @@ public class OrganizationDaoDBTest {
     }
 
     @Test
-    public void testGetAllMembers() {
+    public void testAddGetAllMembers() {
         Organization organization = new Organization();
         organization.setName("Test Organization");
         organization.setDescription("Test Organization Description");
@@ -158,16 +159,29 @@ public class OrganizationDaoDBTest {
         superperson.setDescription("Test Superperson Description");
         superperson.setSuperpower("Test Superpower");
         superperson.setIsHero(true);
-        superpersonDao.add(superperson);
-       
-        List<Superperson> members = new ArrayList<>();
-        members.add(superperson);
-        organization.setSuperpersons(members);
+        superperson = superpersonDao.add(superperson);
         
+        organizationDao.addMember(superperson, organization);
         List<Superperson> membersFromDao = organizationDao.getAllMembers(organization.getOrganizationId());
 
-        assertEquals(1, members.size());
-        //assertEquals(1, membersFromDao.size());
+        assertEquals(1, membersFromDao.size());
+        assertTrue(membersFromDao.contains(superperson));
+        
+        Superperson superperson2 = new Superperson();
+        superperson2.setName("Test Superperson2 Name");
+        superperson2.setDescription("Test Superperson2 Description");
+        superperson2.setSuperpower("Test Superpower");
+        superperson2.setIsHero(false);
+        superperson2 = superpersonDao.add(superperson2);
+        
+        
+        organizationDao.addMember(superperson2, organization);
+        membersFromDao = organizationDao.getAllMembers(organization.getOrganizationId());
+
+        assertEquals(2, membersFromDao.size());
+        assertTrue(membersFromDao.contains(superperson));
+        assertTrue(membersFromDao.contains(superperson2));
+        
   }
     
 }
