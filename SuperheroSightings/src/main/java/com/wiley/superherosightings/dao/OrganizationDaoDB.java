@@ -31,13 +31,13 @@ public class OrganizationDaoDB implements OrganizationDao {
     @Override
     @Transactional
     public Organization add(Organization organization) {
-        final String INSERT_ORGANIZATION = "INSERT INTO organization(name, description, address, phone, email) " +
+        final String INSERT_ORGANIZATION = "INSERT INTO `organization`(`name`, `description`, address, phone, email) " +
                 "VALUES(?,?,?,?,?)";
         jdbc.update(INSERT_ORGANIZATION,
                 organization.getName(),
                 organization.getDescription(),
                 organization.getAddress(),
-                organization.getAddress(),
+                organization.getPhone(),
                 organization.getEmail());
         
         int newId = jdbc.queryForObject("SELECT LAST_INSERT_ID()", Integer.class);
@@ -65,7 +65,7 @@ public class OrganizationDaoDB implements OrganizationDao {
     @Override
     public Organization findById(int id) {
         try {
-            final String GET_ORGANIZATION_BY_ID = "SELECT * FROM organization WHERE organization_id = ?";
+            final String GET_ORGANIZATION_BY_ID = "SELECT * FROM `organization` WHERE organization_id = ?";
             return jdbc.queryForObject(GET_ORGANIZATION_BY_ID, new OrganizationMapper(), id);
         } catch(DataAccessException ex) {
             return null;
