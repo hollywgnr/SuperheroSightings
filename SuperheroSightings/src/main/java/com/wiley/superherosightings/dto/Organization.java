@@ -78,6 +78,10 @@ public class Organization {
     public void setSuperpersons(List<Superperson> superpersons) {
         this.superpersons = superpersons;
     }
+    
+    public void addSuperperson(Superperson superperson){
+        this.superpersons.add(superperson);
+    }
 
     @Override
     public int hashCode() {
