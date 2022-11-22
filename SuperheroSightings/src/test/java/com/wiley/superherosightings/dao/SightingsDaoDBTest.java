@@ -71,10 +71,28 @@ public class SightingsDaoDBTest {
      */
     @Test
     public void testAddGetSighting() {
+        //create location
+        Location loc = new Location();
+        loc.setAddress("180 Accers");
+            loc.setDescription("Very gross");
+            loc.setLattitude(58.5);
+            loc.setLongitude(67.23);
+            loc.setName("Mount Rushmore");
+        int locId = locationDao.add(loc).getLocationId();
+        
+        //create super person
+        Superperson sp1 = new Superperson();
+            sp1.setSuperpersonId(0);
+            sp1.setDescription("Greatest Superhero Alive");
+            sp1.setIsHero(true);
+            sp1.setName("All Might");
+            sp1.setSuperpower("One for All");
+        int spId = superpersonDao.add(sp1).getSuperpersonId();
+
         Sighting sighting = new Sighting();
-        sighting.setLocationId(0);
-        sighting.setSightingTime(LocalDateTime.MIN);
-        sighting.setSuperpersonId(0);
+        sighting.setLocationId(locId);
+        sighting.setSightingTime(LocalDateTime.parse("2015-01-01T11:30:12"));
+        sighting.setSuperpersonId(spId);
         
         sighting = sightingsDao.add(sighting);
         
@@ -124,9 +142,28 @@ public class SightingsDaoDBTest {
     @Test
     public void testUpdate() {
         Sighting sighting = new Sighting();
-        sighting.setLocationId(0);
-        sighting.setSightingTime(LocalDateTime.MIN);
-        sighting.setSuperpersonId(0);
+        //make location
+        Location loc = new Location();
+        loc.setAddress("180 Accers");
+            loc.setDescription("Very gross");
+            loc.setLattitude(58.5);
+            loc.setLongitude(67.23);
+            loc.setName("Mount Rushmore");
+        int locId = locationDao.add(loc).getLocationId();
+        
+        //make super person
+        Superperson sp1 = new Superperson();
+            sp1.setSuperpersonId(0);
+            sp1.setDescription("Greatest Superhero Alive");
+            sp1.setIsHero(true);
+            sp1.setName("All Might");
+            sp1.setSuperpower("One for All");
+        int spId = superpersonDao.add(sp1).getSuperpersonId();
+        
+        //finally make sighting
+        sighting.setLocationId(locId);
+            sighting.setSightingTime(LocalDateTime.parse("2015-01-01T11:30:12"));
+            sighting.setSuperpersonId(spId);
         sighting = sightingsDao.add(sighting);
         
         Sighting fromDao = sightingsDao.findById(sighting.getSightingId());
@@ -147,9 +184,27 @@ public class SightingsDaoDBTest {
     @Test
     public void testDeleteById() {
         Sighting sighting = new Sighting();
-        sighting.setLocationId(0);
-        sighting.setSightingTime(LocalDateTime.MIN);
-        sighting.setSuperpersonId(0);
+        
+        //create location
+        Location loc = new Location();
+            loc.setAddress("180 Accers");
+            loc.setDescription("Very gross");
+            loc.setLattitude(58.5);
+            loc.setLongitude(67.23);
+            loc.setName("Mount Rushmore");
+        int locId = locationDao.add(loc).getLocationId();
+        
+        //create superperson
+        Superperson sp = new Superperson();
+            sp.setDescription("They exist");
+            sp.setIsHero(true);
+            sp.setName("Deku");
+            sp.setSuperpower("One for All");
+        int spId = superpersonDao.add(sp).getSuperpersonId();
+        
+        sighting.setLocationId(locId);
+        sighting.setSightingTime(LocalDateTime.parse("2015-01-01T10:30:12"));
+        sighting.setSuperpersonId(spId);
         sighting = sightingsDao.add(sighting);
                 
         sightingsDao.deleteById(sighting.getSightingId());
@@ -162,7 +217,7 @@ public class SightingsDaoDBTest {
             sp1.setDescription("Greatest Superhero Alive");
             sp1.setIsHero(true);
             sp1.setName("All Might");
-            sp1.setSuperpower("All For One");
+            sp1.setSuperpower("One for All");
         superpersonDao.add(sp1);
         Superperson sp2 = new Superperson();
             sp2.setSuperpersonId(1);

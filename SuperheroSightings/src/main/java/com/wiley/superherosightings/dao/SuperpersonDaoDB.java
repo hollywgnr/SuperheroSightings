@@ -29,11 +29,14 @@ public class SuperpersonDaoDB implements SuperpersonDao {
 
     @Override
     @Transactional
-    public void add(Superperson sp) {
+    public Superperson add(Superperson sp) {
         final String INSERT_SUPERPERSON = "INSERT INTO superperson(name,description,superpower,is_hero) VALUES (?,?,?,?)";
         jdbc.update(INSERT_SUPERPERSON, sp.getName(), sp.getDescription(), sp.getSuperpower(), sp.isIsHero());
+        
         int newId = jdbc.queryForObject("SELECT LAST_INSERT_ID()", Integer.class);
         sp.setSuperpersonId(newId);
+        
+        return sp;
     }
 
     @Override

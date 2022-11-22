@@ -68,7 +68,7 @@ public class SightingsDaoDB implements SightingsDao {
 
     @Override
     public void deleteById(int id) {
-        final String DELETE_BY_ID = "DELETE FROM sighting WHERE id = ?";
+        final String DELETE_BY_ID = "DELETE FROM sighting WHERE sighting_id = ?";
         jdbc.update(DELETE_BY_ID,id);
     }
 
@@ -81,9 +81,9 @@ public class SightingsDaoDB implements SightingsDao {
             Sighting sighting = new Sighting();
             sighting.setLocationId(rs.getInt("location_id"));
             sighting.setSightingId(rs.getInt("sighting_id"));
-            sighting.setSightingTime(rs.getTimestamp("sighting_time").toLocalDateTime());
-            if (rs.getTimestamp("matchEnd") != null) {
-                sighting.setSuperpersonId(rs.getInt("superperson_id"));
+            sighting.setSuperpersonId(rs.getInt("superperson_id"));
+            if (rs.getTimestamp("sighting_time") != null) {
+                sighting.setSightingTime(rs.getTimestamp("sighting_time").toLocalDateTime());
             }
             return sighting;
 
