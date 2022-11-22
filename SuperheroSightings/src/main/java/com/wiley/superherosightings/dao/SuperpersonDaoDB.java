@@ -59,10 +59,10 @@ public class SuperpersonDaoDB implements SuperpersonDao {
 
     @Override
     public List<Organization> getAllOrganizations(int superpersonId) {
-        final String GET_ALL_ORGANIZATIONS = "SELECT o.organization_id,o.`name`,o.`description`,o.address,o.phone,o.email"
-                + " FROM `organization` o"
-                + "JOIN organization_superperson osp ON osp.organization_id = o.organization_id"
-                + "JOIN superperson sp ON sp.superperson_id = osp.superperson_id"
+        final String GET_ALL_ORGANIZATIONS = "SELECT o.organization_id, o.`name`, o.`description`, o.address, o.phone, o.email "
+                + "FROM `organization` o "
+                + "JOIN organization_superperson osp ON osp.organization_id = o.organization_id "
+                + "JOIN superperson sp ON sp.superperson_id = osp.superperson_id "
                 + "WHERE sp.superperson_id = ?;";
         return jdbc.query(GET_ALL_ORGANIZATIONS, new OrganizationMapper(), superpersonId);
     }
