@@ -17,7 +17,7 @@ import java.util.List;
  */
 public interface SuperpersonDao {
     
-    void add(Superperson superperson);
+    Superperson add(Superperson superperson);
     List<Superperson> getAll();
     List<Location> getAllLocations(int superpersonId);
     List<Organization> getAllOrganizations(int superpersonId);
