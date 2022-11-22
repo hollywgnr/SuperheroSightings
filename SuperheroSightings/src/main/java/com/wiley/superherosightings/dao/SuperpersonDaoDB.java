@@ -14,6 +14,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -60,13 +61,15 @@ public class SuperpersonDaoDB implements SuperpersonDao {
     @Override
     @Transactional
     public List<Organization> getAllOrganizations(int superpersonId) {
+        //this won't give the list of superheros (that's in the bridge table)
         final String GET_ALL_ORGANIZATIONS = "SELECT o.organization_id, o.`name`, o.`description`, o.address, o.phone, o.email "
                 + "FROM `organization` o "
                 + "JOIN organization_superperson osp ON osp.organization_id = o.organization_id "
                 + "JOIN superperson sp ON sp.superperson_id = osp.superperson_id "
                 + "WHERE sp.superperson_id = ?;";
         List<Organization> orgs = jdbc.query(GET_ALL_ORGANIZATIONS, new OrganizationMapper(), superpersonId);
-        //returns a list of superheros in 
+        
+        //Iterate through all orgs then add the list of super persons to them manually 
         for(Organization org : orgs){
             final String GET_ALL_SUPERHEROS = "SELECT DISTINCT su.superperson_id,su.`name`,su.`description`,su.superpower,su.is_hero"
                 + " FROM organization o"
@@ -81,8 +84,12 @@ public class SuperpersonDaoDB implements SuperpersonDao {
 
     @Override
     public Superperson findById(int id) {
-        final String FIND_BY_ID = "SELECT * FROM superperson WHERE superperson_id = ?";
-        return jdbc.queryForObject(FIND_BY_ID, new SuperpersonMapper(), id);
+        try {
+            final String FIND_BY_ID = "SELECT * FROM superperson WHERE superperson_id = ?";
+            return jdbc.queryForObject(FIND_BY_ID, new SuperpersonMapper(), id);
+        } catch (DataAccessException ex) {
+            return null;
+        }
     }
 
     @Override

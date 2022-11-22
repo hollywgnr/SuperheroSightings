@@ -203,6 +203,24 @@ public class SuperpersonDaoDBTest {
      */
     @Test
     public void testUpdate() {
+        Superperson sp = new Superperson();
+            sp.setDescription("Protector of the Universe");
+            sp.setName("Steven Universe");
+            sp.setIsHero(true);
+            sp.setSuperpower("Shield");
+        sp = spDao.add(sp);
+        
+        Superperson fromDao = spDao.findById(sp.getSuperpersonId());
+        
+        assertEquals(sp,fromDao);
+        
+        sp.setName("Steven Quartz Universe");
+        spDao.update(sp);
+        
+        assertNotEquals(sp, fromDao);
+        
+        fromDao = spDao.findById(sp.getSuperpersonId());
+        assertEquals(sp, fromDao);
     }
 
     /**
@@ -210,6 +228,44 @@ public class SuperpersonDaoDBTest {
      */
     @Test
     public void testDeleteById() {
+        //make person
+        Superperson sp = new Superperson();
+            sp.setDescription("Very vilinous");
+            sp.setName("Professor Venomus");
+            sp.setIsHero(false);
+            sp.setSuperpower("Draining Power");
+        sp = spDao.add(sp);
+        
+        //make organization
+        Organization o2 = new Organization();
+            o2.setAddress("Across from the plaza");
+            o2.setDescription("Will Destroy the plaza");
+            o2.setEmail("gr34tf4th3r@gmail.com");
+            o2.setName("Boxman inc.");
+            o2.setPhone("8007777777");
+            o2 = orgDao.add(o2);
+        //connect person to organization
+        orgDao.addMember(sp, o2);
+        
+        //make location (to make sighting)
+        Location l2 = new Location();
+            l2.setAddress("Under the Plaza");
+            l2.setDescription("It's like a swer");
+            l2.setLattitude(7.25);
+            l2.setLongitude(19.1);
+            l2.setName("The Glorb Tree");
+        l2 = locDao.add(l2);
+        //make sighting
+         Sighting s1 = new Sighting();
+            s1.setLocationId(l2.getLocationId());
+            s1.setSightingTime(LocalDateTime.now());
+            s1.setSuperpersonId(sp.getSuperpersonId());
+            s1 = sDao.add(s1);
+            
+        spDao.deleteById(sp.getSuperpersonId());
+        Superperson fromDao =spDao.findById(sp.getSuperpersonId());
+        
+        assertNull(fromDao);
     }
     
 }
