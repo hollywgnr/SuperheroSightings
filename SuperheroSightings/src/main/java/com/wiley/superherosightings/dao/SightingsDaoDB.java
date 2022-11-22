@@ -12,6 +12,7 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -47,14 +48,18 @@ public class SightingsDaoDB implements SightingsDao {
     @Override
     public List<Sighting> getAllOnDate(LocalDateTime date) {
         Timestamp dateTs = Timestamp.valueOf(date);
-        final String SELECT_ALL_ON_DATE = "SELECT * FROM sighting WHERE sighting_date = ?";
+        final String SELECT_ALL_ON_DATE = "SELECT * FROM sighting WHERE sighting_time = ?";
         return jdbc.query(SELECT_ALL_ON_DATE, new SightingMapper(), dateTs);
     }
 
     @Override
     public Sighting findById(int id) {
-        final String SELECT_BY_ID = "SELECT * FROM sighting WHERE sighting_id = ?";
-        return jdbc.queryForObject(SELECT_BY_ID, new SightingMapper(), id);
+        try {
+            final String SELECT_BY_ID = "SELECT * FROM sighting WHERE sighting_id = ?";
+            return jdbc.queryForObject(SELECT_BY_ID, new SightingMapper(), id);
+        } catch(DataAccessException ex) {
+            return null;
+        }  
     }
     
     //only cares about the id that is directly written in that parameter
