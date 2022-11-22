@@ -45,24 +45,26 @@ public class SightingsDaoDBTest {
     
     @BeforeEach
     public void setUp() {
-        List<Sighting> sightings = sightingsDao.getAll();
-        for(Sighting sighting: sightings){
-            sightingsDao.deleteById(sighting.getSightingId());
-        }
         
         List<Location> locations = locationDao.getAll();
         for(Location location: locations){
             locationDao.deleteById(location.getLocationId());
         }
+         
+        List<Superperson> superpersons = superpersonDao.getAll();
+        for(Superperson sp:superpersons){
+            superpersonDao.deleteById(sp.getSuperpersonId());
+        }  
         
         List<Organization> organizations = organizationDao.getAll();
         for(Organization organization:organizations){
             organizationDao.deleteById(organization.getOrganizationId());
         }
-        List<Superperson> superpersons = superpersonDao.getAll();
-        for(Superperson sp:superpersons){
-            superpersonDao.deleteById(sp.getSuperpersonId());
-        }            
+        
+        List<Sighting> sightings = sightingsDao.getAll();
+        for(Sighting sighting: sightings){
+            sightingsDao.deleteById(sighting.getSightingId());
+        }
     }
     
 
@@ -105,19 +107,59 @@ public class SightingsDaoDBTest {
      */
     @Test
     public void testGetAll() {
-        Sighting sighting = new Sighting();
-        sighting.setLocationId(0);
-        sighting.setSightingTime(LocalDateTime.MIN);
-        sighting.setSuperpersonId(0);
         
+        //create first location
+        Location loc1 = new Location();
+            loc1.setAddress("180 Accers");
+            loc1.setDescription("Very gross");
+            loc1.setLattitude(58.5);
+            loc1.setLongitude(67.23);
+            loc1.setName("Mount Rushmore");
+        locationDao.add(loc1);
+        
+        //create second location
+        Location loc2 = new Location();
+            loc2.setAddress("Himalaya mountain range");
+            loc2.setDescription("Very cold");
+            loc2.setLattitude(27.9);
+            loc2.setLongitude(86.9);
+            loc2.setName("Mount Everest");
+        locationDao.add(loc2);
+        
+        //create first super person
+        Superperson sp1 = new Superperson();
+            sp1.setDescription("Greatest Superhero Alive");
+            sp1.setIsHero(true);
+            sp1.setName("All Might");
+            sp1.setSuperpower("One for All");
+        superpersonDao.add(sp1);
+        
+        //create first super person
+        Superperson sp2= new Superperson();
+            sp2.setDescription("Water type");
+            sp2.setIsHero(true);
+            sp2.setName("Aquaman");
+            sp2.setSuperpower("Talks to fish");
+        superpersonDao.add(sp2);
+        
+        
+        // create first sighting
+        Sighting sighting1 = new Sighting();
+        sighting1.setLocationId(loc1.getLocationId());
+        sighting1.setSightingTime(LocalDateTime.parse("2015-01-01T11:30:12"));
+        sighting1.setSuperpersonId(sp1.getSuperpersonId());
+        sighting1 = sightingsDao.add(sighting1);
+        
+        // create second sighting
         Sighting sighting2 = new Sighting();
-        sighting.setLocationId(1);
-        sighting.setSightingTime(LocalDateTime.MIN);
-        sighting.setSuperpersonId(1);
+        sighting2.setLocationId(loc2.getLocationId());
+        sighting2.setSightingTime(LocalDateTime.parse("2015-01-01T11:30:12"));
+        sighting2.setSuperpersonId(sp2.getSuperpersonId());
+        sighting2 = sightingsDao.add(sighting2);
         
         List<Sighting> sightings = sightingsDao.getAll();
         assertEquals(2, sightings.size());
-        assertTrue(sightings.contains(sighting));
+        assertTrue(sightings.contains(sighting1));
         assertTrue(sightings.contains(sighting2));
         
     }
@@ -125,21 +167,21 @@ public class SightingsDaoDBTest {
     /**
      * Test of getAllOnDate method, of class SightingsDaoDB.
      */
-    @Test
+    /*@Test
     public void testGetAllOnDate() {
-    }
+    }*/
 
     /**
      * Test of findById method, of class SightingsDaoDB.
      */
-    @Test
+    /*@Test
     public void testFindById() {
-    }
+    }*/
 
     /**
      * Test of update method, of class SightingsDaoDB.
      */
-    @Test
+    /*@Test
     public void testUpdate() {
         Sighting sighting = new Sighting();
         //make location
@@ -176,12 +218,12 @@ public class SightingsDaoDBTest {
         fromDao = sightingsDao.findById(sighting.getSightingId());
         assertEquals(sighting,fromDao);
         
-    }
+    }*/
 
     /**
      * Test of deleteById method, of class SightingsDaoDB.
      */
-    @Test
+    /*@Test
     public void testDeleteById() {
         Sighting sighting = new Sighting();
         
@@ -235,6 +277,6 @@ public class SightingsDaoDBTest {
         
         Location l1 = new Location();
         Location l2 = new Location();
-    }
+    }*/
     
 }
