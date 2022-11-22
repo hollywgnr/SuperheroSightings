@@ -186,7 +186,7 @@ public class SuperpersonDaoDBTest {
             o2.setEmail("3v1lisc001@gmail.com");
             o2.setName("League Of Villians");
             o2.setPhone("8008888888");
-            o2= orgDao.add(o2);
+            o2 = orgDao.add(o2);
         //add superperson to organization each organization
         orgDao.addMember(sp, o1);
         orgDao.addMember(sp, o2);
@@ -196,13 +196,6 @@ public class SuperpersonDaoDBTest {
         assertEquals(2,orgs.size());
         assertTrue(orgs.contains(o1));
         assertTrue(orgs.contains(o2));
-    }
-
-    /**
-     * Test of findById method, of class SuperpersonDaoDB.
-     */
-    @Test
-    public void testFindById() {
     }
 
     /**
