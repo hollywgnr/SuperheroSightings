@@ -9,6 +9,7 @@ import com.wiley.superherosightings.dto.Location;
 import com.wiley.superherosightings.dto.Organization;
 import com.wiley.superherosightings.dto.Sighting;
 import com.wiley.superherosightings.dto.Superperson;
+import java.time.LocalDateTime;
 import java.util.List;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.AfterAll;
@@ -44,26 +45,24 @@ public class SuperpersonDaoDBTest {
     }    
     @BeforeEach
     public void setUp() {
-        
-        List<Location> locations = locDao.getAll();
-        for(Location location: locations){
-            locDao.deleteById(location.getLocationId());
-        }
-        
         List<Organization> organizations = orgDao.getAll();
-        for(Organization organization:organizations){
+        for (Organization organization : organizations) {
             orgDao.deleteById(organization.getOrganizationId());
         }
-        
-        List<Superperson> superpersons = spDao.getAll();
-        for(Superperson sp:superpersons){
-            spDao.deleteById(sp.getSuperpersonId());
-        }   
-        
         List<Sighting> sightings = sDao.getAll();
         for(Sighting sighting: sightings){
             sDao.deleteById(sighting.getSightingId());
         }
+        List<Location> locations = locDao.getAll();
+        for(Location location: locations){
+            locDao.deleteById(location.getLocationId());
+        }
+                
+        List<Superperson> superpersons = spDao.getAll();
+        for(Superperson sp:superpersons){
+            spDao.deleteById(sp.getSuperpersonId());
+        }    
+        
     }
     
     /**
@@ -124,8 +123,38 @@ public class SuperpersonDaoDBTest {
         sp = spDao.add(sp);
         //create two locations
         Location l1 = new Location();
-            
+            l1.setAddress("wowo");
+            l1.setDescription("it's weird");
+            l1.setLattitude(25.5);
+            l1.setLongitude(24.2);
+            l1.setName("wowo");
+        l1 = locDao.add(l1);
+        
         Location l2 = new Location();
+            l2.setAddress("wowo");
+            l2.setDescription("it's weird");
+            l2.setLattitude(25.5);
+            l2.setLongitude(24.2);
+            l2.setName("wowo");
+        l2 = locDao.add(l2);
+        
+        //create sightings with locations
+        Sighting s1 = new Sighting();
+            s1.setLocationId(l1.getLocationId());
+            s1.setSightingTime(LocalDateTime.now());
+            s1.setSuperpersonId(sp.getSuperpersonId());
+            s1 = sDao.add(s1);
+        Sighting s2 = new Sighting();
+            s2.setLocationId(l1.getLocationId());
+            s2.setSightingTime(LocalDateTime.now());
+            s2.setSuperpersonId(sp.getSuperpersonId());
+            s2 = sDao.add(s2);
+            
+        List<Location> spLocations = spDao.getAllLocations(sp.getSuperpersonId());
+        
+        assertEquals(2,spLocations.size());
+        assertTrue(spLocations.contains(l1));
+        assertTrue(spLocations.contains(l2));
         
     }
 

@@ -5,6 +5,8 @@
  */
 package com.wiley.superherosightings.dao;
 
+import com.wiley.superherosightings.dao.LocationDaoDB.LocationMapper;
+import com.wiley.superherosightings.dao.OrganizationDaoDB.OrganizationMapper;
 import com.wiley.superherosightings.dto.Location;
 import com.wiley.superherosightings.dto.Organization;
 import com.wiley.superherosightings.dto.Superperson;
@@ -47,9 +49,10 @@ public class SuperpersonDaoDB implements SuperpersonDao {
 
     @Override
     public List<Location> getAllLocations(int superpersonId) {
-        final String GET_ALL_LOCATIONS = "SELECT l.`name` FROM location l"
-                + "JOIN sighting s ON l.location_id = s.location_id"
-                + "JOIN superperson sp ON s.superperson_id = sp.superperson_id"
+        final String GET_ALL_LOCATIONS = "SELECT l.location_id,l.`name`,l.`description`,l.address,l.lattitude,l.longitude "
+                + "FROM location l "
+                + "JOIN sighting s ON l.location_id = s.location_id "
+                + "JOIN superperson sp ON s.superperson_id = sp.superperson_id "
                 + "WHERE sp.superperson_id = ?";
         return jdbc.query(GET_ALL_LOCATIONS, new LocationMapper(), superpersonId);
     }
@@ -109,22 +112,4 @@ public class SuperpersonDaoDB implements SuperpersonDao {
         }
 
     }
-
-    public static final class OrganizationMapper implements RowMapper<Organization> {
-
-        @Override
-        public Organization mapRow(ResultSet rs, int rowNum) throws SQLException {
-            throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-        }
-
-    }
-    public static final class LocationMapper implements RowMapper<Location>{
-
-        @Override
-        public Location mapRow(ResultSet rs, int rowNum) throws SQLException {
-            throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-        }
-        
-    }
-
 }
