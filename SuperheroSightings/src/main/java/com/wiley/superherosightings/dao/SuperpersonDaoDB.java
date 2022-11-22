@@ -28,7 +28,7 @@ public class SuperpersonDaoDB implements SuperpersonDao {
 
     @Autowired
     JdbcTemplate jdbc;
-
+    
     @Override
     @Transactional
     public Superperson add(Superperson sp) {
@@ -58,13 +58,25 @@ public class SuperpersonDaoDB implements SuperpersonDao {
     }
 
     @Override
+    @Transactional
     public List<Organization> getAllOrganizations(int superpersonId) {
-        final String GET_ALL_ORGANIZATIONS = "SELECT o.organization_id,o.`name`,o.`description`,o.address,o.phone,o.email"
-                + " FROM `organization` o"
-                + "JOIN organization_superperson osp ON osp.organization_id = o.organization_id"
-                + "JOIN superperson sp ON sp.superperson_id = osp.superperson_id"
+        final String GET_ALL_ORGANIZATIONS = "SELECT o.organization_id, o.`name`, o.`description`, o.address, o.phone, o.email "
+                + "FROM `organization` o "
+                + "JOIN organization_superperson osp ON osp.organization_id = o.organization_id "
+                + "JOIN superperson sp ON sp.superperson_id = osp.superperson_id "
                 + "WHERE sp.superperson_id = ?;";
-        return jdbc.query(GET_ALL_ORGANIZATIONS, new OrganizationMapper(), superpersonId);
+        List<Organization> orgs = jdbc.query(GET_ALL_ORGANIZATIONS, new OrganizationMapper(), superpersonId);
+        //returns a list of superheros in 
+        for(Organization org : orgs){
+            final String GET_ALL_SUPERHEROS = "SELECT DISTINCT su.superperson_id,su.`name`,su.`description`,su.superpower,su.is_hero"
+                + " FROM organization o"
+                + " JOIN organization_superperson os ON o.organization_id = os.organization_id"
+                + " JOIN superperson su ON su.superperson_id = su.superperson_id"
+                + " WHERE o.organization_id = ?;";
+            List<Superperson> sps = jdbc.query(GET_ALL_SUPERHEROS, new SuperpersonMapper(), org.getOrganizationId());
+            org.setSuperpersons(sps);
+        }
+        return orgs;
     }
 
     @Override

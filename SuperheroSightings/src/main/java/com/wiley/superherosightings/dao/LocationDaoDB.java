@@ -88,12 +88,13 @@ public class LocationDaoDB implements LocationDao {
 
     @Override
     @Transactional 
-    public boolean deleteById(int id) {     
+    public boolean deleteById(int id) { 
+        final String DELETE_SIGHTING = "DELETE FROM sighting WHERE location_id = ?";
+        jdbc.update(DELETE_SIGHTING, id);
+        
         final String DELETE_LOCATION = "DELETE FROM location WHERE location_id = ?";
         jdbc.update(DELETE_LOCATION, id);
         
-        final String DELETE_SIGHTING = "DELETE FROM sighting WHERE location_id = ?";
-        jdbc.update(DELETE_SIGHTING, id);
         return true;
     }
     

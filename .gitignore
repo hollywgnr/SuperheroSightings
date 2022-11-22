@@ -1,3 +1,6 @@
 /SuperheroSightings/target/
 /SuperheroSightings/nbproject/
 **/application.properties
+/SuperheroSightings/src/test/resources/application.properties
+SuperheroSightings/src/main/resources/application.properties
+

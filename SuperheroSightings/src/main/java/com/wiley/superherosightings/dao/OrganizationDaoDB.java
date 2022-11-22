@@ -100,11 +100,12 @@ public class OrganizationDaoDB implements OrganizationDao {
     @Override
     @Transactional
     public boolean deleteById(int id) {
+        final String DELETE_ORGANIZATION_SUPERPERSON = "DELETE FROM organization_superperson WHERE organization_id = ?";
+        jdbc.update(DELETE_ORGANIZATION_SUPERPERSON, id);
+        
         final String DELETE_ORGANIZATION = "DELETE FROM organization WHERE organization_id = ?";
         jdbc.update(DELETE_ORGANIZATION, id);
         
-        final String DELETE_ORGANIZATION_SUPERPERSON = "DELETE FROM organization_superperson WHERE organization_id = ?";
-        jdbc.update(DELETE_ORGANIZATION_SUPERPERSON, id);
         return true;
     }
     //helper functions

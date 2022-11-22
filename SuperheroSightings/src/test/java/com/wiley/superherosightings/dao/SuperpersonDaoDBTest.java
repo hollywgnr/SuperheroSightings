@@ -49,13 +49,14 @@ public class SuperpersonDaoDBTest {
         for (Organization organization : organizations) {
             orgDao.deleteById(organization.getOrganizationId());
         }
-        List<Sighting> sightings = sDao.getAll();
-        for(Sighting sighting: sightings){
-            sDao.deleteById(sighting.getSightingId());
-        }
+        
         List<Location> locations = locDao.getAll();
         for(Location location: locations){
             locDao.deleteById(location.getLocationId());
+        }
+        List<Sighting> sightings = sDao.getAll();
+        for(Sighting sighting: sightings){
+            sDao.deleteById(sighting.getSightingId());
         }
                 
         List<Superperson> superpersons = spDao.getAll();
@@ -163,13 +164,38 @@ public class SuperpersonDaoDBTest {
      */
     @Test
     public void testGetAllOrganizations() {
-    }
-
-    /**
-     * Test of findById method, of class SuperpersonDaoDB.
-     */
-    @Test
-    public void testFindById() {
+        //create superperson
+        Superperson sp = new Superperson();
+            sp.setDescription("From Tommorow Land");
+            sp.setName("Miles");
+            sp.setIsHero(true);
+            sp.setSuperpower("Buff Brains");
+        sp = spDao.add(sp);
+        //create two Organization 2
+        Organization o1 = new Organization();
+            o1.setAddress("Puppy kickers blvd");
+            o1.setDescription("We're pretty evil");
+            o1.setEmail("3v1lisc001@gmail.com");
+            o1.setName("League Of Villians");
+            o1.setPhone("8008888888");
+            o1 = orgDao.add(o1);
+            
+        Organization o2 = new Organization();
+            o2.setAddress("Puppy kickers blvd");
+            o2.setDescription("We're pretty evil");
+            o2.setEmail("3v1lisc001@gmail.com");
+            o2.setName("League Of Villians");
+            o2.setPhone("8008888888");
+            o2 = orgDao.add(o2);
+        //add superperson to organization each organization
+        orgDao.addMember(sp, o1);
+        orgDao.addMember(sp, o2);
+        
+        List<Organization> orgs = spDao.getAllOrganizations(sp.getSuperpersonId());
+        
+        assertEquals(2,orgs.size());
+        assertTrue(orgs.contains(o1));
+        assertTrue(orgs.contains(o2));
     }
 
     /**
