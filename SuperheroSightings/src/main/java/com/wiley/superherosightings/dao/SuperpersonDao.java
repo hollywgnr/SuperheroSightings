@@ -22,7 +22,7 @@ public interface SuperpersonDao {
     List<Location> getAllLocations(int superpersonId);
     List<Organization> getAllOrganizations(int superpersonId);
     Superperson findById(int id);
-    void update(Superperson superperson);
-    void deleteById(int id);
+    boolean update(Superperson superperson);
+    boolean deleteById(int id);
     
 }

@@ -9,7 +9,9 @@ import com.wiley.superherosightings.dto.Sighting;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -27,7 +29,8 @@ public class SightingsDaoDB implements SightingsDao {
 
     @Autowired
     JdbcTemplate jdbc;
-
+    
+    //adds a new sighting to database and returns the sighting that was added (id will be auto generated)
     @Override
     @Transactional
     public Sighting add(Sighting sighting) {
@@ -38,20 +41,21 @@ public class SightingsDaoDB implements SightingsDao {
         sighting.setSightingId(newId);
         return sighting;
     }
-
+    //returns all sightings in database
     @Override
     public List<Sighting> getAll() {
         final String SELECT_ALL_SIGHTINGS = "SELECT * FROM sighting";
         return jdbc.query(SELECT_ALL_SIGHTINGS, new SightingMapper());
     }
-
+    //returns all sightings in database that happened on a particular day
     @Override
-    public List<Sighting> getAllOnDate(LocalDateTime date) {
-        Timestamp dateTs = Timestamp.valueOf(date);
-        final String SELECT_ALL_ON_DATE = "SELECT * FROM sighting WHERE sighting_time = ?";
-        return jdbc.query(SELECT_ALL_ON_DATE, new SightingMapper(), dateTs);
+    public List<Sighting> getAllOnDate(LocalDate date) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String dateStr = date.format(formatter);
+        final String SELECT_ALL_ON_DATE = "SELECT * FROM sighting WHERE CAST(sighting_time AS date) =?";
+        return jdbc.query(SELECT_ALL_ON_DATE, new SightingMapper(), dateStr);
     }
-
+    //returns Sighting object from database based on id num, returns null if not found
     @Override
     public Sighting findById(int id) {
         try {
@@ -62,19 +66,29 @@ public class SightingsDaoDB implements SightingsDao {
         }  
     }
     
-    //only cares about the id that is directly written in that parameter
+    //only cares about the id that is directly written in that parameter, true or false based on success
     @Override
-    public void update(Sighting sighting) {
-        final String UPDATE_SIGHTING = "UPDATE sighting SET location_id = ?,"
-                + "superperson_id = ?,sighting_time = ? WHERE sighting_id = ?";
-        jdbc.update(UPDATE_SIGHTING,sighting.getLocationId(),
-                sighting.getSuperpersonId(),sighting.getSightingTime(),sighting.getSightingId());
+    public boolean update(Sighting sighting) {
+        try {
+            final String UPDATE_SIGHTING = "UPDATE sighting SET location_id = ?,"
+                    + "superperson_id = ?,sighting_time = ? WHERE sighting_id = ?";
+            jdbc.update(UPDATE_SIGHTING, sighting.getLocationId(),
+                    sighting.getSuperpersonId(), sighting.getSightingTime(), sighting.getSightingId());
+            return false;
+        } catch (DataAccessException ex) {
+            return false;
+        }
     }
-
+    //deletes item at id, if successfull returns true
     @Override
-    public void deleteById(int id) {
+    public boolean deleteById(int id) {
+        try{
         final String DELETE_BY_ID = "DELETE FROM sighting WHERE sighting_id = ?";
         jdbc.update(DELETE_BY_ID,id);
+        return true;
+        }catch(DataAccessException ex){
+            return false;
+        }
     }
 
     //helper function
