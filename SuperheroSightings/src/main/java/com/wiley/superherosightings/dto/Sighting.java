@@ -13,10 +13,10 @@ import java.util.Objects;
  * @author tiara
  */
 public class Sighting {
-    int sightingId;
-    int locationId;
-    int superpersonId;
-    LocalDateTime sightingTime;
+    private int sightingId;
+    private int locationId;
+    private int superpersonId;
+    private LocalDateTime sightingTime;
 
     public int getSightingId() {
         return sightingId;

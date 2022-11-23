@@ -12,11 +12,11 @@ import java.util.Objects;
  * @author tiara
  */
 public class Superperson {
-    int superpersonId;
-    String name;
-    String description;
-    String superpower;
-    boolean isHero;
+    private int superpersonId;
+    private String name;
+    private String description;
+    private String superpower;
+    private boolean isHero;
 
     public int getSuperpersonId() {
         return superpersonId;
@@ -94,6 +94,6 @@ public class Superperson {
             return false;
         }
         return Objects.equals(this.superpower, other.superpower);
-    }
+    } 
     
 }
