@@ -5,7 +5,6 @@
  */
 package com.wiley.superherosightings.dao;
 
-import com.wiley.superherosightings.TestApplicationConfiguration;
 import com.wiley.superherosightings.dto.Location;
 import com.wiley.superherosightings.dto.Organization;
 import com.wiley.superherosightings.dto.Sighting;
@@ -24,8 +23,8 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
  *
  * @author tiara
  */
-@ExtendWith(SpringExtension.class)
-@SpringBootTest(classes = TestApplicationConfiguration.class)
+
+@SpringBootTest
 public class SightingsDaoDBTest {
     @Autowired
     SightingsDao sightingsDao;
