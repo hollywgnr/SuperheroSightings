@@ -69,6 +69,22 @@ public class HomeController {
         return "superpersons";
     }
     
-
+    @PostMapping("addSuperperson")
+    public String addSuperperson(HttpServletRequest request) {
+        String name = request.getParameter("name");
+        String description = request.getParameter("description");
+        String superpower = request.getParameter("superpower");
+        String isHero = request.getParameter("isHero");
+        
+        Superperson superperson = new Superperson();
+        superperson.setName(name);
+        superperson.setDescription(description);
+        superperson.setSuperpower(superpower);
+        superperson.setIsHero(Boolean.parseBoolean(isHero));
+        
+        superpersonDao.add(superperson);
+        
+        return "redirect:/superpersons";
+    }
     
 }
