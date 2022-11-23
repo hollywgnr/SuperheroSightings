@@ -12,7 +12,9 @@ import com.wiley.superherosightings.dto.Location;
 import com.wiley.superherosightings.dto.Sighting;
 import com.wiley.superherosightings.dto.Superperson;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -38,19 +40,17 @@ public class HomeController {
     @GetMapping("index")
     public String displayRecentSightings(Model model){
 
-        
         List<Sighting> sightings = sightingsDao.getAll();
-        model.addAttribute("sightings", sightings);
-        
-        List<Location> locations = new ArrayList<>();
-        List<Superperson> superpersons = new ArrayList<>();
+        List<SightingInfo> sightingsWithInfo = new ArrayList<>();
         for(Sighting sighting : sightings){
-            int id = sighting.getSightingId();
-            locations.add(locationDao.findById(id));
-            superpersons.add(superpersonDao.findById(id));
+            SightingInfo si = new SightingInfo();
+            si.setSightingTime(sighting.getSightingTime());
+            si.setLocationName(locationDao.findById(sighting.getLocationId()).getName());
+            si.setSuperpersonName(superpersonDao.findById(sighting.getSuperpersonId()).getName());
+            
+            sightingsWithInfo.add(si);
         }
-        model.addAttribute("sightings", locations);
-        model.addAttribute("sightings", superpersons);
+        model.addAttribute("sightings", sightingsWithInfo);
         
         return "index";
     }

@@ -4,22 +4,18 @@
         <!-- Required meta tags -->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-
         <title>Course Manager</title>
     </head>
     <body>
         <!-- Main Body of Page -->
-
         <!-- nav bar -->
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <a class="navbar-brand" href="">Superhero Sightings</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active">
@@ -40,7 +36,6 @@
                 </ul>
             </div>
         </nav>
-
         <!-- website description -->
         <div class="row m-4">
             <div class="col text-center border border-dark">
@@ -50,7 +45,6 @@
                 <p>Add, edit, view or delete superson sighting-related information.<br></p>
             </div>
         </div>
-
         <!-- 10 Recent Sightings -->
         <div class="row m-4 border border-dark">
             <div class="col text-center m-3">
@@ -63,24 +57,18 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <!--<tr th:each = "i :${#numbers.sequence(0,9)}">
-                                                    <td th:text="${i}">Sighting Time</td>
-                                                    <td th:text="${sightings.get(i).sightingTime}">Sighting Time</td>
-                                                </tr>-->
-                        <tr th:each = "index,sighting:${#sightings}">
-                            <td th:text="${sighting.sightingId}">Sighting ID</td>
-                            <td th:text="${sighting.locationId}">Location ID</td>
-                            <td th:text="${sighting.superpersonId}">superperson ID</td>
-
-                        </tr>
+                    <h2>Recent Sightings</h2>
+                    <tr th:each = "sighting :${sightings}">
+                        <td th:text="${sighting.getSightingTime()}">Sighting Time</td>
+                        <td th:text="${sighting.getLocationName()}">Location</td>
+                        <td th:text="${sighting.getSuperpersonName()}">Superperson</td>
+                    </tr>
                     </tbody>
                 </table>
             </div>
         </div>
-
-    </div>  
+    </div>
     <!-- End main body -->
-
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
