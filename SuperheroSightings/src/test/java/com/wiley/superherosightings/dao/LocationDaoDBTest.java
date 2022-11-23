@@ -6,6 +6,7 @@
 package com.wiley.superherosightings.dao;
 
 import com.wiley.superherosightings.dto.Location;
+import com.wiley.superherosightings.dto.Organization;
 import com.wiley.superherosightings.dto.Sighting;
 import com.wiley.superherosightings.dto.Superperson;
 import java.time.LocalDateTime;
