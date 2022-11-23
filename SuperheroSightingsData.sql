@@ -1,11 +1,4 @@
 USE SuperheroSightingsDB;
-TRUNCATE TABLE organization_superperson;
-TRUNCATE TABLE superperson;
-TRUNCATE TABLE `organization`;
-TRUNCATE TABLE location;
-TRUNCATE TABLE sighting;
-
-
 
 select * from superperson;
 INSERT INTO superperson(`name`,`description`,superpower,is_hero) 
