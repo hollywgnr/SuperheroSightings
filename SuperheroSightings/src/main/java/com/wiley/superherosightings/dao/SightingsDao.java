@@ -6,7 +6,7 @@
 package com.wiley.superherosightings.dao;
 
 import com.wiley.superherosightings.dto.Sighting;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -17,9 +17,9 @@ public interface SightingsDao {
     
     Sighting add(Sighting sighting);
     List<Sighting> getAll();
-    List<Sighting> getAllOnDate(LocalDateTime date);
+    List<Sighting> getAllOnDate(LocalDate date);
     Sighting findById(int id);
-    void update(Sighting sighting);
-    void deleteById(int id);
+    boolean update(Sighting sighting);
+    boolean deleteById(int id);
     
 }

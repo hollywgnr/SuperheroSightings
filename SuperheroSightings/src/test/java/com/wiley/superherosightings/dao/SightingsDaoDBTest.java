@@ -9,6 +9,7 @@ import com.wiley.superherosightings.dto.Location;
 import com.wiley.superherosightings.dto.Organization;
 import com.wiley.superherosightings.dto.Sighting;
 import com.wiley.superherosightings.dto.Superperson;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import org.junit.jupiter.api.Test;
@@ -206,11 +207,11 @@ public class SightingsDaoDBTest {
         
         // finally make sighting
         sighting2.setLocationId(loc.getLocationId());
-            sighting2.setSightingTime(LocalDateTime.parse("2015-01-01T11:30:12"));
+            sighting2.setSightingTime(LocalDateTime.parse("2015-01-01T11:33:12"));
             sighting2.setSuperpersonId(sp2.getSuperpersonId());
         sighting2 = sightingsDao.add(sighting2);
         
-        List<Sighting> sightingsOnDate = sightingsDao.getAllOnDate(LocalDateTime.parse("2015-01-01T11:30:12"));
+        List<Sighting> sightingsOnDate = sightingsDao.getAllOnDate(LocalDate.parse("2015-01-01"));
         assertEquals(sightingsOnDate.size(), 2);
         assertTrue(sightingsOnDate.contains(sighting1));
         assertTrue(sightingsOnDate.contains(sighting2));

@@ -48,6 +48,7 @@ public class LocationDaoDBTest {
     public static void tearDownClass() {
     }
     
+    // empty database before each of the test cases
     @BeforeEach
     public void setUp() {
         
@@ -185,6 +186,7 @@ public class LocationDaoDBTest {
         // call getAllSuperheros
         List<Superperson> sightedSuperheros = locationDao.getAllSuperheros(location);
         assertEquals(1, sightedSuperheros.size());
+        assertTrue(sightedSuperheros.contains(superperson));
     }
     
 }

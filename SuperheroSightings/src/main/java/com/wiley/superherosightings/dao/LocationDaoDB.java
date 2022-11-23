@@ -27,7 +27,11 @@ public class LocationDaoDB implements LocationDao {
 
     @Autowired
     JdbcTemplate jdbc;
-    
+    /**
+     * adds a location to the database
+     * @param location
+     * @return the successfully added location
+     */
     @Override
     @Transactional
     public Location add(Location location) {
@@ -45,13 +49,21 @@ public class LocationDaoDB implements LocationDao {
         return location;
     }
 
+    /**
+     * get all locations in the database
+     * @return a list of all locations in the database
+     */
     @Override
     public List<Location> getAll() {
         final String GET_ALL_LOCATIONS = "SELECT * FROM location";
         return jdbc.query(GET_ALL_LOCATIONS, new LocationMapper());
     }
 
-    // returns a list of all superheros at a particular location
+    /**
+     * returns a list of all superheros at a particular location
+     * @param location
+     * @return list of 'superpersons'
+     */
     @Override
     public List<Superperson> getAllSuperheros(Location location) {
         final String GET_ALL_SUPERHEROS = "SELECT su.superperson_id,su.`name`,su.`description`,su.superpower,su.is_hero"
@@ -62,6 +74,12 @@ public class LocationDaoDB implements LocationDao {
         return jdbc.query(GET_ALL_SUPERHEROS, new SuperpersonMapper(), location.getLocationId());
     }
 
+    /**
+     * Find a location with the specified locationId in the database
+     * @param id
+     * @return the location with the specified locationId
+     * returns null on error
+     */
     @Override
     public Location findById(int id) {
         try {
@@ -72,6 +90,11 @@ public class LocationDaoDB implements LocationDao {
         }  
     }
 
+    /**
+     * Update a location in database with the provided values
+     * @param location
+     * @return true on success
+     */
     @Override
     public boolean update(Location location) {
         final String UPDATE_LOCATION = "UPDATE location SET name = ?, description = ?, " +
@@ -86,18 +109,29 @@ public class LocationDaoDB implements LocationDao {
         return true;
     }
 
+    /**
+     * delete a location with a specified locationId
+     * @param id
+     * @return true on success
+     */
     @Override
     @Transactional 
     public boolean deleteById(int id) { 
-        final String DELETE_SIGHTING = "DELETE FROM sighting WHERE location_id = ?";
-        jdbc.update(DELETE_SIGHTING, id);
-        
-        final String DELETE_LOCATION = "DELETE FROM location WHERE location_id = ?";
-        jdbc.update(DELETE_LOCATION, id);
-        
+        try{
+            final String DELETE_SIGHTING = "DELETE FROM sighting WHERE location_id = ?";
+            jdbc.update(DELETE_SIGHTING, id);
+
+            final String DELETE_LOCATION = "DELETE FROM location WHERE location_id = ?";
+            jdbc.update(DELETE_LOCATION, id);
+        }catch(DataAccessException ex){
+            return false;
+        }
         return true;
     }
     
+    /**
+     * A helper class for mapping database tables to in memory location objects
+     */
     public static final class LocationMapper implements RowMapper<Location> {
 
         @Override
