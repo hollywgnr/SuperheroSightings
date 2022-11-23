@@ -63,10 +63,13 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr th:each = "i :${#numbers.sequence(0,10)}">
-                            <!--<td th:text="${sightings.get(i).sightingTime}">Sighting Time</td>-->
-                            
+                        <h2>Recent Sightings</h2>
+                        <tr th:each = "sighting :${sightings}">
+                            <td th:text="${sighting.getSightingTime()}">Sighting Time</td>
+                            <td th:text="${sighting.getLocationName()}">Location</td>
+                            <td th:text="${sighting.getSuperpersonName()}">Superperson</td>
                         </tr>
+
                     </tbody>
                 </table>
             </div>
