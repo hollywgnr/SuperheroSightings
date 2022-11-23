@@ -28,6 +28,12 @@ public class OrganizationDaoDB implements OrganizationDao {
     @Autowired
     JdbcTemplate jdbc;
 
+    
+    /**
+     * adds an organization to the database
+     * @param organization
+     * @return the added organization
+     */
     @Override
     @Transactional
     public Organization add(Organization organization) {
@@ -46,12 +52,21 @@ public class OrganizationDaoDB implements OrganizationDao {
         return organization;
     }
 
+    /**
+     * gets all organizations in the database
+     * @return a list of organizations
+     */
     @Override
     public List<Organization> getAll() {
         final String GET_ALL_ORGANIZATIONS = "SELECT * FROM organization";
         return jdbc.query(GET_ALL_ORGANIZATIONS, new OrganizationMapper());
     }
 
+    /**
+     * returns a list of all 'superpersons' at a particular location
+     * @param organizationId
+     * @return a list of 'superpersons'
+     */
     @Override
     public List<Superperson> getAllMembers(int organizationId) {
         final String GET_ALL_SUPERHEROS = "SELECT DISTINCT su.superperson_id,su.`name`,su.`description`,su.superpower,su.is_hero"
@@ -62,6 +77,11 @@ public class OrganizationDaoDB implements OrganizationDao {
         return jdbc.query(GET_ALL_SUPERHEROS, new SuperpersonMapper(), organizationId);
     }
     
+    /**
+     * adds a 'superperson' to an organization
+     * @param superperson
+     * @param organization 
+     */
     @Override
     @Transactional
     public void addMember(Superperson superperson, Organization organization) {
@@ -71,6 +91,12 @@ public class OrganizationDaoDB implements OrganizationDao {
         insertOrganizationSuperperson(organization, superperson);
     }
 
+    /**
+     * Find an organization with the specified organizationId in the database
+     * @param id
+     * @return the organization with the specified organizationId
+     * returns null on error
+     */
     @Override
     public Organization findById(int id) {
         try {
@@ -81,6 +107,11 @@ public class OrganizationDaoDB implements OrganizationDao {
         } 
     }
 
+    /**
+     * Update an organization in database with the provided values
+     * @param organization
+     * @return true on success
+     */
     @Override
     @Transactional
     public boolean update(Organization organization) {
@@ -97,18 +128,27 @@ public class OrganizationDaoDB implements OrganizationDao {
         return true;
     }
 
+    /**
+     * delete an organization with a specified organizationId
+     * @param id
+     * @return true on success
+     */
     @Override
     @Transactional
     public boolean deleteById(int id) {
-        final String DELETE_ORGANIZATION_SUPERPERSON = "DELETE FROM organization_superperson WHERE organization_id = ?";
-        jdbc.update(DELETE_ORGANIZATION_SUPERPERSON, id);
-        
-        final String DELETE_ORGANIZATION = "DELETE FROM organization WHERE organization_id = ?";
-        jdbc.update(DELETE_ORGANIZATION, id);
-        
+        try{
+            final String DELETE_ORGANIZATION_SUPERPERSON = "DELETE FROM organization_superperson WHERE organization_id = ?";
+            jdbc.update(DELETE_ORGANIZATION_SUPERPERSON, id);
+
+            final String DELETE_ORGANIZATION = "DELETE FROM organization WHERE organization_id = ?";
+            jdbc.update(DELETE_ORGANIZATION, id);
+        }catch(DataAccessException ex){
+            return false;
+        }
         return true;
     }
-    //helper functions
+    
+    // helper functions for insering into the organization_superperson bridge table
     private void insertOrganizationSuperperson(Organization org){
         final String INSERT_ORG_SUP = "INSERT INTO organization_superperson"
                 + "(organization_id,superperson_id) VALUES(?,?)";
@@ -122,7 +162,9 @@ public class OrganizationDaoDB implements OrganizationDao {
         jdbc.update(INSERT_ORG_SUP,org.getOrganizationId(),sp.getSuperpersonId());
     }
 
-
+    /**
+     * A helper class for mapping database tables to in memory organization objects
+     */
     public static final class OrganizationMapper implements RowMapper<Organization> {
 
         @Override

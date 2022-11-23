@@ -17,6 +17,7 @@ public interface OrganizationDao {
     
     Organization add(Organization organization);
     List<Organization> getAll();
+    // add a superperson to an organization
     void addMember(Superperson superperson, Organization organization);
     List<Superperson> getAllMembers(int organizationId);
     Organization findById(int id);
