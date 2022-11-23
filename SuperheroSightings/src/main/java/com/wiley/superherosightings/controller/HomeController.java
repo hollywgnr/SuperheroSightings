@@ -42,13 +42,17 @@ public class HomeController {
 
         List<Sighting> sightings = sightingsDao.getAll();
         List<SightingInfo> sightingsWithInfo = new ArrayList<>();
+        int count = 0;
         for(Sighting sighting : sightings){
-            SightingInfo si = new SightingInfo();
-            si.setSightingTime(sighting.getSightingTime());
-            si.setLocationName(locationDao.findById(sighting.getLocationId()).getName());
-            si.setSuperpersonName(superpersonDao.findById(sighting.getSuperpersonId()).getName());
-            
-            sightingsWithInfo.add(si);
+            if(count < 10){
+                SightingInfo si = new SightingInfo();
+                si.setSightingTime(sighting.getSightingTime());
+                si.setLocationName(locationDao.findById(sighting.getLocationId()).getName());
+                si.setSuperpersonName(superpersonDao.findById(sighting.getSuperpersonId()).getName());
+
+                sightingsWithInfo.add(si);
+            }
+            count++;
         }
         model.addAttribute("sightings", sightingsWithInfo);
         
