@@ -15,7 +15,7 @@
 
         <!-- nav bar -->
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="#">Superhero Sightings</a>
+            <a class="navbar-brand" href="">Superhero Sightings</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -40,9 +40,6 @@
                 </ul>
             </div>
         </nav>
-        
-        <!-- 10 Recent Sightings -->
-
 
         <!-- website description -->
         <div class="row m-4">
@@ -53,6 +50,28 @@
                 <p>Add, edit, view or delete superson sighting-related information.<br></p>
             </div>
         </div>
+
+        <!-- 10 Recent Sightings -->
+        <div class="row m-4 border border-dark">
+            <div class="col text-center m-3">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Sighting Time</th>
+                            <th>Location</th>
+                            <th>Superperson</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each = "i :${#numbers.sequence(0,10)}">
+                            <!--<td th:text="${sightings.get(i).sightingTime}">Sighting Time</td>-->
+                            
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
     </div>  
     <!-- End main body -->
 
