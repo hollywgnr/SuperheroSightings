@@ -13,7 +13,7 @@ import java.util.Objects;
  */
 public class Location {
     int locationId;
-    String name;
+    private String name;
     String description;
     String Address;
     double lattitude;
