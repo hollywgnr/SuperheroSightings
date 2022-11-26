@@ -38,11 +38,13 @@
                 </ul>
             </div>
         </nav>
+        <td><a href="#" th:href="@{/viewSuperperson(id=${superperson.getSuperpersonId()})}">View</a></td>
+<!--
         <div th:each="sp : ${superpersons}">
             <a th:href="@{superperson/{id}(id = ${sp.superpersonId})}">
                 <span th:text="${sp.name}"></span>
             </a>
-        </div>
+        </div>-->
         <!--        <div th:each="item : ${items}">
                     <a th:href="@{/superperson/{id}(id = ${superperson.superpersonId})}">
                         <span th:text="${superperson.name}"></span>
