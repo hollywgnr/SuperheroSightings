@@ -95,6 +95,13 @@ public class HomeController {
         return "redirect:/superpersons";
     }
     
-
+    @GetMapping("viewSuperperson")
+    public String viewSuperperson(HttpServletRequest request, Model model) {
+        int id = Integer.parseInt(request.getParameter("id"));
+        Superperson superperson = superpersonDao.findById(id);
+        
+        model.addAttribute("superperson", superperson);
+        return "viewSuperperson";
+    }
     
 }
