@@ -67,7 +67,13 @@
                     <div class="form-group row">
                         <label for="isHero" class="col-3 col-form-label">Alignment</label>
                         <div class="col-9">
-                            <input type="text" name="isHero" id="isHero" class="form-control"/>
+
+                            <select name ="isHero" id ="isHero">
+                                <option value ="True">Hero</option>
+                                <option value ="False">Villain</option>
+                                <option value = "null">N/A</option>
+                            </select>
+                            <!-- <input type="text" name="isHero" id="isHero" class="form-control"/> -->
                         </div>
                     </div>
                     <button type="submit" class="btn btn-primary">Add Super</button>
@@ -99,9 +105,13 @@
                             </tr>
                         </thead>
                         <tbody>
+
                             <tr th:each="superperson : ${superpersons}">
                                 <td th:text="${superperson.getName()}">Name</td>
-                                <td th:text="${(superperson.isIsHero()? 'hero' : 'villian')}">Alignment</td>
+                                <!--<td th:text="${(!superperson.isIsHero() ? (!superperson.isIsHero() ? 'villain' : 'unknown) : 'hero}">Alignment</td>-->
+                                <!--<td th:text="${(!superperson.isIsHero()"></td>-->
+                                <td th:text="${(superperson.isIsHero()? 'hero' : 'villain')}">Alignment</td>
+         
                                 <td th:text="${superperson.getSuperpower()}">Superpower</td>
                                 <td><a href="#" th:href="@{/viewSuperperson(id=${superperson.getSuperpersonId()})}">View</a></td>
                                 <td><a href="#" th:href="@{/deleteSuperperson(id=${superperson.getSuperpersonId()})}">Delete</a></td>
