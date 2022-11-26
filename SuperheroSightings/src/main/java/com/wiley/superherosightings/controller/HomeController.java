@@ -87,4 +87,14 @@ public class HomeController {
         return "redirect:/superpersons";
     }
     
+    @GetMapping("deleteSuperperson")
+    public String deleteSuperperson(HttpServletRequest request) {
+        int id = Integer.parseInt(request.getParameter("id"));
+        superpersonDao.deleteById(id);
+        
+        return "redirect:/superpersons";
+    }
+    
+
+    
 }
