@@ -104,7 +104,7 @@
                                 <td th:text="${(superperson.isIsHero()? 'hero' : 'villian')}">Alignment</td>
                                 <td th:text="${superperson.getSuperpower()}">Superpower</td>
                                 <td>View</td>
-                                <td>Delete</td>
+                                <td><a href="#" th:href="@{/deleteSuperperson(id=${superperson.getSuperpersonId()})}">Delete</a></td>
                             </tr>
                         </tbody>
                     </table>
