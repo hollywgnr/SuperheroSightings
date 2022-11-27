@@ -68,40 +68,6 @@ public class HomeController {
         model.addAttribute("superpersons", superpersons);
         return "superpersons";
     }
-    
-    @PostMapping("addSuperperson")
-    public String addSuperperson(HttpServletRequest request) {
-        String name = request.getParameter("name");
-        String description = request.getParameter("description");
-        String superpower = request.getParameter("superpower");
-        String isHero = request.getParameter("isHero");
-        
-        Superperson superperson = new Superperson();
-        superperson.setName(name);
-        superperson.setDescription(description);
-        superperson.setSuperpower(superpower);
-        superperson.setIsHero(Boolean.parseBoolean(isHero));
-        
-        superpersonDao.add(superperson);
-        
-        return "redirect:/superpersons";
-    }
-    
-    @GetMapping("deleteSuperperson")
-    public String deleteSuperperson(HttpServletRequest request) {
-        int id = Integer.parseInt(request.getParameter("id"));
-        superpersonDao.deleteById(id);
-        
-        return "redirect:/superpersons";
-    }
-    
-    @GetMapping("viewSuperperson")
-    public String viewSuperperson(HttpServletRequest request, Model model) {
-        int id = Integer.parseInt(request.getParameter("id"));
-        Superperson superperson = superpersonDao.findById(id);
-        
-        model.addAttribute("superperson", superperson);
-        return "viewSuperperson";
-    }
+
     
 }
