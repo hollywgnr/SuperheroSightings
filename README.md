@@ -19,10 +19,11 @@ Front End Notes:
   -[ ]Holly: FIX ERD to match changes made in database
   -[x]Tiara: ~~Write Dao Impl for sightings and superperson along with tests~~
   -[x]Holly:  ~~Write Dao Impl for Location and Organization along with tests~~
-	-[ ] Database changes:
-	-[ ] location--> name and description should be null-able
-	-[ ] increase length of description
-	-[ ] increase length of address
+  - Tiara:
+	-[x] Database changes:
+	-[x] location--> name and description should be null-able
+	-[x] increase length of description
+	-[x] increase length of address
   -[ ] Maybe no setSuperPersonList ? IDK if it's used
 Tiara: Add view and delete to locations and organizations, add edit superheroview, lengthen descriptins in database
 Holly: get Superpowerpage working, do sightings page( make like home page but with edit)

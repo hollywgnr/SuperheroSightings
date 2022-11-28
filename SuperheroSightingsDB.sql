@@ -22,8 +22,8 @@ CREATE TABLE `organization`(
 
 CREATE TABLE location(
     location_id INT PRIMARY KEY AUTO_INCREMENT,
-    `name` TINYTEXT NOT NULL,
-    `description` LONGTEXT NOT NULL,
+    `name` TINYTEXT,
+    `description` LONGTEXT,
     address MEDIUMTEXT NOT NULL,
     lattitude DOUBLE NOT NULL,
     longitude DOUBLE NOT NULL
