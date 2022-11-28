@@ -32,7 +32,7 @@ public class SuperpersonsController {
         model.addAttribute("superpersons", superpersons);
         return "superpersons";
     }*/
-
+    /*
     @PostMapping("addSuperperson")
     public String addSuperperson(HttpServletRequest request) {
         String name = request.getParameter("name");
@@ -57,6 +57,6 @@ public class SuperpersonsController {
         superpersonDao.deleteById(id);
 
         return "redirect:/superpersons";
-    }
+    }*/
 
 }
