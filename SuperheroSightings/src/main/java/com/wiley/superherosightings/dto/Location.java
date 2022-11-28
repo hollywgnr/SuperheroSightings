@@ -16,7 +16,7 @@ public class Location {
     private String name;
     String description;
     String Address;
-    double lattitude;
+    double lattitude;   // miss spelling
     double longitude;
 
     public int getLocationId() {

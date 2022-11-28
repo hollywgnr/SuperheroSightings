@@ -19,7 +19,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="#">Superpersons <span class="sr-only">(current)</span></a>
+                        <a class="nav-link" href="superpersons">Superpersons <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item active">
                         <a class="nav-link" href="#">Superpowers <span class="sr-only">(current)</span></a>
@@ -42,10 +42,10 @@
 
         <div class="row m-4 border border-dark">
             <div class="col-3 text-center m-3">
-                <span class="h3">Add Super</span>
+                <span class="h3">Add Organization</span>
             </div>
             <div class="col-7 text-center m-3">
-                <form action="addSuperperson" method="POST">
+                <form action="addOrganization" method="POST">
                     <div class="form-group row">
                         <label for="name" class="col-3 col-form-label">Name</label>
                         <div class="col-9">
@@ -59,36 +59,33 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="superpower" class="col-3 col-form-label">Superpower</label>
+                        <label for="address" class="col-3 col-form-label">Address</label>
                         <div class="col-9">
-                            <input type="text" name="superpower" id="superpower" class="form-control"/>
+                            <input type="text" name="address" id="address" class="form-control"/>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="isHero" class="col-3 col-form-label">Alignment</label>
+                        <label for="phone" class="col-3 col-form-label">Phone</label>
                         <div class="col-9">
-
-                            <select name ="isHero" id ="isHero">
-                                <option value ="True">Hero</option>
-                                <option value ="False">Villain</option>
-                                <option value = "null">N/A</option>
-                            </select>
-                            <!-- <input type="text" name="isHero" id="isHero" class="form-control"/> -->
+                            <input type="text" name="phone" id="phone" class="form-control"/>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-primary">Add Super</button>
+                    <div class="form-group row">
+                        <label for="email" class="col-3 col-form-label">Email</label>
+                        <div class="col-9">
+                            <input type="text" name="email" id="email" class="form-control"/>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Add Organization</button>
                 </form>
             </div>
         </div>
 
-
-
-
-
         <div class="container">
             <div class="row m-4">
                 <div class="col text-center border border-dark">
-                    <h1><a href="/" class="text-dark">Supers</a></h1>
+                    <h1><a href="/" class="text-dark">Organizations</a></h1>
                 </div>
             </div>
 
@@ -98,26 +95,34 @@
                         <thead>
                             <tr>
                                 <th>Name</th>
-                                <th>Alignment</th>
-                                <th>Superpower</th>
+                                <th>Description</th>
+                                <th>Address</th>
+                                <th>Phone</th>
+                                <th>Email</th>
                                 <th>View</th>
                                 <th>Delete</th>
                             </tr>
                         </thead>
                         <tbody>
-
-                            <tr th:each="superperson : ${superpersons}">
-                                <td th:text="${superperson.getName()}">Name</td>
-                                <td th:text ="${superperson.alignment}"></td>
-                                <td th:text="${superperson.getSuperpower()}">Superpower</td>
-                                <td><a href="#" th:href="@{/viewSuperperson(id=${superperson.getSuperpersonId()})}">View</a></td>
-                                <td><a href="#" th:href="@{/deleteSuperperson(id=${superperson.getSuperpersonId()})}">Delete</a></td>
+                            <tr th:each="organization : ${organizations}">
+                                <td th:text="${organization.getName()}">Name</td>
+                                <td th:text="${organization.getDescription()}">Description</td>
+                                <td th:text="${organization.getAddress()}">Address</td>
+                                <td th:text="${organization.getPhone()}">Phone</td>
+                                <td th:text="${organization.getEmail()}">Email</td>
+                                <td>View</td>
+                                <td>delete</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
+
+
+
+
+
 
         <!-- End main body -->
         <!-- Optional JavaScript -->
@@ -126,4 +131,4 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
     </body>
-</html>;
+</html>

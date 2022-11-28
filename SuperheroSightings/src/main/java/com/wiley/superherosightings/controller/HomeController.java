@@ -29,25 +29,24 @@ import org.springframework.web.bind.annotation.PostMapping;
  */
 @Controller
 public class HomeController {
-    
+
     @Autowired
     SightingsDao sightingsDao;
-    
+
     @Autowired
     LocationDao locationDao;
-    
+
     @Autowired
     SuperpersonDao superpersonDao;
-    
-    
+
     @GetMapping("index")
-    public String displayRecentSightings(Model model){
+    public String displayRecentSightings(Model model) {
 
         List<Sighting> sightings = sightingsDao.getAll();
         List<SightingInfo> sightingsWithInfo = new ArrayList<>();
         int count = 0;
-        for(Sighting sighting : sightings){
-            if(count < 10){
+        for (Sighting sighting : sightings) {
+            if (count < 10) {
                 SightingInfo si = new SightingInfo();
                 si.setSightingTime(sighting.getSightingTime());
                 si.setLocationName(locationDao.findById(sighting.getLocationId()).getName());
@@ -58,12 +57,12 @@ public class HomeController {
             count++;
         }
         model.addAttribute("sightings", sightingsWithInfo);
-        
+
         return "index";
     }
-    
+
     @GetMapping("superpersons")
-    public String displaySuperpersons(Model model){
+    public String displaySuperpersons(Model model) {
 
         List<Superperson> superpersons = superpersonDao.getAll();
         //put all of it into a superperson object to get data to thymeleaf easier
@@ -73,7 +72,7 @@ public class HomeController {
         }
         model.addAttribute("superpersons", spos);
         return "superpersons";
-    }
+    }   
     
     @PostMapping("addSuperperson")
     public String addSuperperson(HttpServletRequest request) {
@@ -100,7 +99,7 @@ public class HomeController {
         
         return "redirect:/superpersons";
     }
-    /*
+    
     @GetMapping("viewSuperperson")
     public String viewSuperperson(HttpServletRequest request, Model model) {
         int id = Integer.parseInt(request.getParameter("id"));
@@ -108,6 +107,15 @@ public class HomeController {
         
         model.addAttribute("superperson", superperson);
         return "viewSuperperson";
-    }*/
+    }
     
+
+    /*@GetMapping("locations")
+    public String displayLocations(Model model) {
+
+        List<Location> locations = locationDao.getAll();
+        model.addAttribute("location", locations);
+        return "locations";
+    }*/
+
 }
