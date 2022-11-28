@@ -25,13 +25,13 @@ public class SuperpersonsController {
     @Autowired
     SuperpersonDao superpersonDao;
 
-    /*@GetMapping("superpersons")
+    @GetMapping("superpersons")
     public String displaySuperpersons(Model model) {
 
         List<Superperson> superpersons = superpersonDao.getAll();
         model.addAttribute("superpersons", superpersons);
         return "superpersons";
-    }*/
+    }
 
     @PostMapping("addSuperperson")
     public String addSuperperson(HttpServletRequest request) {

@@ -60,20 +60,4 @@ public class HomeController {
         return "index";
     }
 
-    @GetMapping("superpersons")
-    public String displaySuperpersons(Model model) {
-
-        List<Superperson> superpersons = superpersonDao.getAll();
-        model.addAttribute("superpersons", superpersons);
-        return "superpersons";
-    }
-
-    /*@GetMapping("locations")
-    public String displayLocations(Model model) {
-
-        List<Location> locations = locationDao.getAll();
-        model.addAttribute("location", locations);
-        return "locations";
-    }*/
-
 }
