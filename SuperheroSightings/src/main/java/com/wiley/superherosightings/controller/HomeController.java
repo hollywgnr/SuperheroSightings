@@ -11,6 +11,7 @@ import com.wiley.superherosightings.dao.SuperpersonDao;
 import com.wiley.superherosightings.dto.Location;
 import com.wiley.superherosightings.dto.Sighting;
 import com.wiley.superherosightings.dto.Superperson;
+import com.wiley.superherosightings.dto.SuperpersonObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -65,7 +66,12 @@ public class HomeController {
     public String displaySuperpersons(Model model){
 
         List<Superperson> superpersons = superpersonDao.getAll();
-        model.addAttribute("superpersons", superpersons);
+        //put all of it into a superperson object to get data to thymeleaf easier
+        List<SuperpersonObject> spos = new ArrayList<>();
+        for(Superperson sp: superpersons){
+            spos.add(new SuperpersonObject(sp));
+        }
+        model.addAttribute("superpersons", spos);
         return "superpersons";
     }
     
@@ -94,7 +100,7 @@ public class HomeController {
         
         return "redirect:/superpersons";
     }
-    
+    /*
     @GetMapping("viewSuperperson")
     public String viewSuperperson(HttpServletRequest request, Model model) {
         int id = Integer.parseInt(request.getParameter("id"));
@@ -102,6 +108,6 @@ public class HomeController {
         
         model.addAttribute("superperson", superperson);
         return "viewSuperperson";
-    }
+    }*/
     
 }

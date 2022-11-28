@@ -108,10 +108,7 @@
 
                             <tr th:each="superperson : ${superpersons}">
                                 <td th:text="${superperson.getName()}">Name</td>
-                                <!--<td th:text="${(!superperson.isIsHero() ? (!superperson.isIsHero() ? 'villain' : 'unknown) : 'hero}">Alignment</td>-->
-                                <!--<td th:text="${(!superperson.isIsHero()"></td>-->
-                                <td th:text="${(superperson.isIsHero()? 'hero' : 'villain')}">Alignment</td>
-         
+                                <td th:text ="${superperson.alignment}"></td>
                                 <td th:text="${superperson.getSuperpower()}">Superpower</td>
                                 <td><a href="#" th:href="@{/viewSuperperson(id=${superperson.getSuperpersonId()})}">View</a></td>
                                 <td><a href="#" th:href="@{/deleteSuperperson(id=${superperson.getSuperpersonId()})}">Delete</a></td>

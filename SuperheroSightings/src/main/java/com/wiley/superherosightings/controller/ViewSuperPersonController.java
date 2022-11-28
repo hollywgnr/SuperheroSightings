@@ -6,6 +6,7 @@ package com.wiley.superherosightings.controller;
 
 import com.wiley.superherosightings.dao.SuperpersonDao;
 import com.wiley.superherosightings.dto.Superperson;
+import com.wiley.superherosightings.dto.SuperpersonObject;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,10 +21,10 @@ import org.springframework.web.bind.annotation.PathVariable;
  */
 @Controller
 public class ViewSuperPersonController {
-
+    
     @Autowired
     SuperpersonDao superpersonDao;
-
+    /*
     @GetMapping("superperson")
     public String displayAll(Model model) {
         List<Superperson> allSups = superpersonDao.getAll();
@@ -40,13 +41,13 @@ public class ViewSuperPersonController {
             model.addAttribute("superperson", sp);
         }
         return "superperson";
-    }
+    }*/
     @GetMapping("viewSuperperson")
     public String viewSuperperson(HttpServletRequest request, Model model) {
         int id = Integer.parseInt(request.getParameter("id"));
         Superperson superperson = superpersonDao.findById(id);
         
-        model.addAttribute("superperson", superperson);
+        model.addAttribute("superperson", new SuperpersonObject(superperson));
         return "viewSuperperson";
     }
 

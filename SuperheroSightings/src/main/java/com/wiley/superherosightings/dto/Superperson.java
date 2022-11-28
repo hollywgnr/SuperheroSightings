@@ -16,7 +16,7 @@ public class Superperson {
     private String name;
     private String description;
     private String superpower;
-    private boolean isHero;
+    private Boolean isHero;
 
     public int getSuperpersonId() {
         return superpersonId;
@@ -50,11 +50,11 @@ public class Superperson {
         this.superpower = superpower;
     }
 
-    public boolean isIsHero() {
+    public Boolean isHero() {
         return isHero;
     }
 
-    public void setIsHero(boolean isHero) {
+    public void setIsHero(Boolean isHero) {
         this.isHero = isHero;
     }
 

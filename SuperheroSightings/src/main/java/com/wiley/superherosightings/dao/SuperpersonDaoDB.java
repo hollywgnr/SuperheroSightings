@@ -36,7 +36,7 @@ public class SuperpersonDaoDB implements SuperpersonDao {
     @Transactional
     public Superperson add(Superperson sp) {
         final String INSERT_SUPERPERSON = "INSERT INTO superperson(name,description,superpower,is_hero) VALUES (?,?,?,?)";
-        jdbc.update(INSERT_SUPERPERSON, sp.getName(), sp.getDescription(), sp.getSuperpower(), sp.isIsHero());
+        jdbc.update(INSERT_SUPERPERSON, sp.getName(), sp.getDescription(), sp.getSuperpower(), sp.isHero());
         
         int newId = jdbc.queryForObject("SELECT LAST_INSERT_ID()", Integer.class);
         sp.setSuperpersonId(newId);
@@ -110,7 +110,7 @@ public class SuperpersonDaoDB implements SuperpersonDao {
             final String UPDATE_SUPERPERSON = "UPDATE superperson SET name = ?,description = ?,superpower=?,is_hero=? "
                     + "WHERE superperson_id = ?";
             jdbc.update(UPDATE_SUPERPERSON, sp.getName(), sp.getDescription(),
-                    sp.getSuperpower(), sp.isIsHero(), sp.getSuperpersonId());
+                    sp.getSuperpower(), sp.isHero(), sp.getSuperpersonId());
             return true;
         } catch (DataAccessException ex) {
             return false;
@@ -149,6 +149,9 @@ public class SuperpersonDaoDB implements SuperpersonDao {
             Superperson sp = new Superperson();
             sp.setDescription(rs.getString("description"));
             sp.setIsHero(rs.getBoolean("is_hero"));
+            if(rs.wasNull()){
+                sp.setIsHero(null);
+            }
             sp.setName(rs.getString("name"));
             sp.setSuperpersonId(rs.getInt("superperson_id"));
             sp.setSuperpower(rs.getString("superpower"));
