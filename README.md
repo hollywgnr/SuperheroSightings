@@ -24,3 +24,5 @@ Front End Notes:
 	-[ ] increase length of description
 	-[ ] increase length of address
   -[ ] Maybe no setSuperPersonList ? IDK if it's used
+Tiara: Add view and delete to locations and organizations, add edit superheroview, lengthen descriptins in database
+Holly: get Superpowerpage working, do sightings page( make like home page but with edit)

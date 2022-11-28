@@ -39,7 +39,7 @@ public class SuperpersonsController {
         model.addAttribute("superpersons", spos);
         return "superpersons";
     }
-    
+
     @PostMapping("addSuperperson")
     public String addSuperperson(HttpServletRequest request) {
         String name = request.getParameter("name");
