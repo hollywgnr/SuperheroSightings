@@ -36,8 +36,8 @@
                 </ul>
             </div>
         </nav>
-        
-        <div id ="container">
+        <!--Superperson info-->
+        <div class ="float-left">
             <div id ="container" style ="white-space:nowrap">
                 <div id ="image" style ="display:inline; float: left">
                     <img src="superpersonDefault.jpg" width = "500" height = "500">
@@ -50,6 +50,49 @@
                 Description: <span th:text ="${superperson.description}"></span><br>
 
 
+            </div>
+        </div>
+        <!--Edit superperson-->
+        <div class="row m-4 border border-dark">
+            <div class="col-3 text-center m-3">
+                <span class="h3">Edit Superperson</span>
+            </div>
+            <div class="col-7 text-center m-3">
+                <form action="editSuperperson" method="POST">
+                    <div class="form-group row">
+                        <label for="name" class="col-3 col-form-label">Name</label>
+                        <div class="col-9">
+                            <input type="text" name="name" id="name" class="form-control" value="name" th:value="${superperson.name}"/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="alignment" class="col-3 col-form-label">Alignment</label>
+                        <div class="col-9">
+                            <select class="form-control" name="alignment" id="alignment">
+                                <option selected>Select Alignment</option>
+                                <option value="1">Hero</option>
+                                <option value="2">Villain</option>
+                                <option value="3">Unknown</option>
+                            </select>
+                            <!--<input type="text" name="alignment" id="alignment" class="form-control"/>-->
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="longitude" class="col-3 col-form-label">Superpower</label>
+                        <div class="col-9">
+                            <input type="text" name="superpower" id="superpower" class="form-control" value="superpower"  th:value ="${superperson.superpower}"/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="description" class="col-3 col-form-label">Description</label>
+                        <div class="form-group">
+                            <textarea class ="form-control" name ="description" id ="description" rows="7" cols="50" oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'th:text ="${superperson.description}"></textarea>
+                            <!--<input type="text" name="description" id="description" class="form-control"/>-->
+                        </div>
+                    </div>
+                    <input type="hidden" name="id" th:value="${superperson.superpersonId}"/>
+                    <button type="submit" class="btn btn-primary">Edit Superperson</button>
+                </form>
             </div>
         </div>
 

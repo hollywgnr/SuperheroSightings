@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 /**
  *
@@ -50,6 +51,38 @@ public class ViewSuperPersonController {
         
         model.addAttribute("superperson", new SuperpersonObject(superperson));
         return "viewSuperperson";
+    }
+    @PostMapping("editSuperperson")
+    public String editSuperperson(HttpServletRequest request) {
+        int id = Integer.parseInt(request.getParameter("id"));
+        String name = request.getParameter("name");
+        String alignment = request.getParameter("alignment");
+        String superpower = request.getParameter("superpower");
+        String description = request.getParameter("description");
+
+
+        Superperson sp = new Superperson();
+        sp.setSuperpersonId(id);
+        sp.setSuperpower(superpower);
+        sp.setName(name);
+        sp.setDescription(description);
+        switch (alignment) {
+            case "Hero":
+                sp.setIsHero(true);
+                break;
+            case "Villain":
+                sp.setIsHero(false);
+                break;
+            default:
+                //unknown -->should default null, but just to be sure
+                sp.setIsHero(null);
+                break;
+        }
+        sp.setDescription(description);
+
+        superpersonDao.update(sp);
+
+        return "redirect:/superpersons";//maybe redirect somewhere else?
     }
 
 }
