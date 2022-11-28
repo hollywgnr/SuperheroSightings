@@ -5,16 +5,16 @@ USE SuperheroSightingsDB;
 
 CREATE TABLE superperson(
     superperson_id INT PRIMARY KEY AUTO_INCREMENT,
-    `name` VARCHAR(25) NOT NULL,
-    `description` VARCHAR(50) NOT NULL,
-    superpower VARCHAR(25) NOT NULL,
+    `name` TINYTEXT NOT NULL,
+    `description` LONGTEXT NOT NULL,
+    superpower TINYTEXT NOT NULL,
     is_hero BOOLEAN
 );
 
 CREATE TABLE `organization`(
     organization_id INT PRIMARY KEY AUTO_INCREMENT,
-    `name` VARCHAR(25) NOT NULL,
-    `description` VARCHAR(50) NOT NULL,
+    `name` TINYTEXT NOT NULL,
+    `description` LONGTEXT NOT NULL,
     address VARCHAR(25) NOT NULL,
     phone VARCHAR(10) NOT NULL,
     email VARCHAR(64) NOT NULL
@@ -22,9 +22,9 @@ CREATE TABLE `organization`(
 
 CREATE TABLE location(
     location_id INT PRIMARY KEY AUTO_INCREMENT,
-    `name` VARCHAR(25) NOT NULL,
-    `description` VARCHAR(50) NOT NULL,
-    address VARCHAR(25) NOT NULL,
+    `name` TINYTEXT NOT NULL,
+    `description` LONGTEXT NOT NULL,
+    address MEDIUMTEXT NOT NULL,
     lattitude DOUBLE NOT NULL,
     longitude DOUBLE NOT NULL
 );
@@ -44,4 +44,4 @@ CREATE TABLE sighting(
 	superperson_id INT NOT NULL,
     FOREIGN KEY (superperson_id) REFERENCES superperson(superperson_id),
     sighting_time DATETIME
-);
+); -- test--
