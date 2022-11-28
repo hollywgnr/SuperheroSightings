@@ -24,7 +24,7 @@ public class ViewSuperPersonController {
     
     @Autowired
     SuperpersonDao superpersonDao;
-    /*
+    
     @GetMapping("superperson")
     public String displayAll(Model model) {
         List<Superperson> allSups = superpersonDao.getAll();
@@ -33,15 +33,16 @@ public class ViewSuperPersonController {
         return "superperson";
     }
 
-    /*@GetMapping("superperson/{id}")
+    @GetMapping("superperson/{id}")
     public String displaySuperperson(@PathVariable("superpersonId") int id, Model model) {
         //model.addAttribute("superperson",superpersonDao.findById(id));
         List<Superperson> allSups = superpersonDao.getAll();
+        
         for (Superperson sp : allSups) {
             model.addAttribute("superperson", sp);
         }
         return "superperson";
-    }*/
+    }
     @GetMapping("viewSuperperson")
     public String viewSuperperson(HttpServletRequest request, Model model) {
         int id = Integer.parseInt(request.getParameter("id"));

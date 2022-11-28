@@ -38,7 +38,7 @@ public class HomeController {
 
     @Autowired
     SuperpersonDao superpersonDao;
-
+    
     @GetMapping("index")
     public String displayRecentSightings(Model model) {
 
@@ -60,7 +60,7 @@ public class HomeController {
 
         return "index";
     }
-
+    /*
     @GetMapping("superpersons")
     public String displaySuperpersons(Model model) {
 
@@ -74,7 +74,7 @@ public class HomeController {
         return "superpersons";
     }   
     
-    @PostMapping("addSuperperson")
+    /*@PostMapping("addSuperperson")
     public String addSuperperson(HttpServletRequest request) {
         String name = request.getParameter("name");
         String description = request.getParameter("description");
@@ -99,7 +99,7 @@ public class HomeController {
         
         return "redirect:/superpersons";
     }
-    
+    /*
     @GetMapping("viewSuperperson")
     public String viewSuperperson(HttpServletRequest request, Model model) {
         int id = Integer.parseInt(request.getParameter("id"));
@@ -108,7 +108,7 @@ public class HomeController {
         model.addAttribute("superperson", superperson);
         return "viewSuperperson";
     }
-    
+    */
 
     /*@GetMapping("locations")
     public String displayLocations(Model model) {
