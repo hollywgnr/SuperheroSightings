@@ -30,9 +30,6 @@ public class LocationsController {
     @Autowired
     LocationDao locationDao;
 
-    @Autowired
-    SightingsDao sightingsDao;
-
     @GetMapping("locations")
     public String displayLocations(Model model) {
         List<Location> locations = locationDao.getAll();
